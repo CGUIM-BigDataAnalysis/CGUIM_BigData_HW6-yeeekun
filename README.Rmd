@@ -31,7 +31,7 @@ output: github_document
 #這是R Code Chunk
 library(readr)
 library(readxl)
-Pollution <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年板橋站_20170217.xls")
+Banqiao <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年板橋站_20170217.xls")
 Linkou <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年林口站_20170217.xls")
 Sanchong <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年三重站_20170217.xls")
 Tanshui <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年淡水站_20170217.xls")
