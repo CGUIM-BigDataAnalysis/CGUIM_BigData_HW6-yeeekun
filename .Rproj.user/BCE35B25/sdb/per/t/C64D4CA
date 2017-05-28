@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\nstr(airquality)\n\n\nairqualityTO <- airquality[,c(\"Temp\",\"Ozone\")]\nairqualityTOClean <-airqualityTO[complete.cases(airqualityTO),]\ncor(airqualityTOClean$Temp,airqualityTOClean$Ozone)\n\n\nstr(mtcars)\nmtTable<-table(mtcars$cyl,mtcars$gear)\n## margin=1 --> ?C?`?M??1   margin=2 --> ??(??)?`?M??1\nprop.table(mtTable,margin = 1)\n\n\n#install.packages(\"data.table)\nlibrary(data.table)\n##Ū???ɮ? ??fread()\n\nlibrary(SportsAnalytics)\nNBA1516<-fetch_NBAPlayerStatistics(\"15-16\")\nlibrary(data.table)\nNBA1516DT<-data.table(NBA1516)\n\nas100<- NBA1516DT[Assists>100,\n                  .(ms=mean(Steals),mb=mean(TotalRebounds)),by=Team]\n\n#?U??>100 ?ۺI>20\nlibrary(SportsAnalytics)\nlibrary(dplyr)\nNBA1516<-fetch_NBAPlayerStatistics(\"15-16\")\nNBA_f<-filter(NBA1516, Assists>100&Steals>20)\n\n##?C?XName Team Position GamesPlayed TotalMinutesPlayed Assists Steals ?C??????\nNBA_f_s<-select(NBA_f,Name:TotalMinutesPlayed, Assists, Steals)\n## summarise() ?Ψӭp??\nsummarise(NBA_f_s,\n          nPlayer=n(),\n          GP_mean=mean(GamesPlayed),\n          TMP_mean=mean(TotalMinutesPlayed))\n\n##pipe?g?k ???K???i ???֦h?l???ƪ??F?????äC?K?V?@???ܼ?\nNBA1516<-fetch_NBAPlayerStatistics(\"15-16\")\n\nNBA1516 %>%\nfilter(Assists>100&Steals>20) %>%\n##?C?XName Team Position GamesPlayed TotalMinutesPlayed Assists Steals ?C??????\nselect(Name:TotalMinutesPlayed, Assists, Steals)  %>%\nsummarise(nPlayer=n(),\n          GP_mean=mean(GamesPlayed),\n          TMP_mean=mean(TotalMinutesPlayed))\n\n#group_by 1?????ƦW?A2,3???]?w?��ը̾?\n##?p???U???U?u?Ʀ??m?]?HTeam?MPosition?@???��ը̾ڡ^???y???ơB???????i?????��y?ƥH?Υ??????X?????��y??\ngroup_by(NBA1516,Team,Position) %>%\n  summarise(nPlayer=n(),\n            meanFGMade=mean(FieldGoalsMade),\n            meanFGAtt=mean(FieldGoalsAttempted)) %>%\n  ##?Ƨ? (?w?]???W) desc ????\n  arrange(desc(meanFGMade))\n\n##???X?m??\nlibrary(SportsAnalytics)\nlibrary(dplyr)\nNBA1516<-fetch_NBAPlayerStatistics(\"15-16\")\n\nNBA1516 %>%\n  filter(Assists>100&Steals>20) %>%\n  ##?C?XName Team Position GamesPlayed TotalMinutesPlayed Assists Steals ?C??????\n  select(Name:TotalMinutesPlayed, Assists, Steals) %>%\n  group_by(Position) %>%\n  summarise(GP_mean=mean(GamesPlayed),\n            TMP_mean=mean(TotalMinutesPlayed)) %>%\n  arrange(desc(GP_mean))\n  \n\n\n\n\n",
+    "created" : 1495963899662.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "736231457",
+    "id" : "C64D4CA",
+    "lastKnownWriteTime" : 1493625856,
+    "last_content_update" : 1493625856,
+    "path" : "D:/Program Files/BigData_R_Hw/Course/C_0501_1.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

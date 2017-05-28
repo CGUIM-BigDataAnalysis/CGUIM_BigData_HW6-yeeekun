@@ -58,7 +58,12 @@ for (i in 4:ncol(AirPollution.20160231)) {
      AirPollution.20160231[,i] <- as.numeric(as.character(AirPollution.20160231[,i]))
    }
 }
-AirPollution.20160231$Average<- rowMeans(AirPollution.20160231[, 4:27],na.rm = TRUE)
+AirPollution.20160231$Average<- round(rowMeans(AirPollution.20160231[, 4:27],na.rm = TRUE),2)
+
+##工廠清洗(抓八次)= =
+factory_operate <- rbind(NewTaipeiFactoryLocation[grepl("生產中",NewTaipeiFactoryLocation$STATUS),])
+factory_Xizhi <- rbind(factory_operate[grepl("汐止",factory_operate$FACT_ADDR),])
+factory_Xizhi$FACT_ADDR<-"汐止"
 
 ```
 

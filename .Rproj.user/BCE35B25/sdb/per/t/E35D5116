@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(ggplot2)\nqplot(Sepal.Length, Sepal.Width, \n      data=iris, color=Species)\n\nqplot(Petal.Width, \n      data=iris, fill=Species, bins=20)\n\nlibrary(SportsAnalytics)\nNBA1516<-fetch_NBAPlayerStatistics(\"15-16\")\nqplot(FieldGoalsAttempted, TotalPoints, \n      data = NBA1516,\n      facets = . ~ Position)\n\nqplot(Sepal.Length, Sepal.Width, \n      data=iris, facets= .~Species)\n\nggplot(iris, aes(Species, Sepal.Width))+\n  geom_boxplot()+\n  theme_bw()\n\nggplot(iris, aes(Sepal.Length, Sepal.Width, color= Species))+\n  geom_line()\n\n  ",
+    "created" : 1495963999098.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3418073582",
+    "id" : "E35D5116",
+    "lastKnownWriteTime" : 1494230603,
+    "last_content_update" : 1494230603,
+    "path" : "D:/Program Files/BigData_R_Hw/Course/C_0508_1.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

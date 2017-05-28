@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#\nstr(USPersonalExpenditure)\nhead(USPersonalExpenditure)\n\n##\nnames(USPersonalExpenditure)\nhead(USPersonalExpenditure)\nx<-cbind(USPersonalExpenditure,c(100,60,30,10,5))\nx\n##[[1]]代表row name\n##[[2]]代表column name\ndimnames(x)[[2]][6]<-1965\nx\n\n##\ndata(USPersonalExpenditure)\nUSPersonalExpenditureDF<-data.frame(USPersonalExpenditure)\nUSPersonalExpenditureDF$x1965<-c(100,60,30,10,5)\nhead(USPersonalExpenditureDF)\n\n#\nlibrary(dplyr)\nnameDF<-data.frame(ID=c(1,2,3,4,5),\n                   Name=c(\"Amy\",\"Bob\",\"Chris\",\"David\",\"Emma\"))\nscoreDF<-data.frame(ID=c(1,2,4),\n                    Score=c(60,90,50))\n'\ninner_join()：保留有對應到的資料\nleft_join()：保留左邊資料框的所有資料\nright_join()：保留右邊資料框的所有資料\nfull_join()：保留所有資料\nsemi_join()：保留第一張表對應到第二張的資料\nanti_join()：保留第一章表沒對應到第二張的資料\n'\nsemi_join()\nanti_join()\n\n#\n\n\n## EXERCISE\ndd<-merge(education,population,by=c(\"site_id\",\"village\"),all=T)\n\n##\nlibrary(reshape2)\nhead(airquality,5)\nairqualityM<-melt(airquality,id.vars = c(\"Month\",\"Day\"))##欄位需要保留\"Month\",\"Day\"\nhead(airqualityM)\n\ntry<-read.csv(\"C:/Users/Ray/Desktop/HEPATITIS_A_Cases.csv\")\nhead(try)\ntryM<-melt(try,id.vars = c(\"YEAR\",\"WEEK\"))\nhead(tryM)\n\n#\nhead(mtcars)\n## 馬力平均.標準差\nround(mean(mtcars$hp),2)\nsd(mtcars$hp)\n## 幾輪的車子最多\ntable(mtcars$cyl)\n## 油耗標準差\nquantile(mtcars$mpg)\n",
+    "created" : 1495963920718.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3345936744",
+    "id" : "3B2E7300",
+    "lastKnownWriteTime" : 1493232296,
+    "last_content_update" : 1493232296,
+    "path" : "D:/Program Files/BigData_R_Hw/Course/C_0417_1.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
