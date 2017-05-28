@@ -40,115 +40,15 @@ library(readr)
     ## Warning: package 'readr' was built under R version 3.3.3
 
 ``` r
-Banqiao <- read_csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Banqiao_20170217.csv")
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `<U+00A4><e9><U+00B4><c1>` = col_date(format = "")
-    ## )
-
-    ## See spec(...) for full column specifications.
-
-``` r
-Linkou <- read_csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Linkou_20170217.csv")
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `<U+00A4><e9><U+00B4><c1>` = col_date(format = "")
-    ## )
-    ## See spec(...) for full column specifications.
-
-``` r
-Sanchong <- read_csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Sanchong_20170217.csv")
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `<U+00A4><e9><U+00B4><c1>` = col_date(format = "")
-    ## )
-    ## See spec(...) for full column specifications.
-
-``` r
-Tanshui <- read_csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Tanshui_20170217.csv")
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `<U+00A4><e9><U+00B4><c1>` = col_date(format = ""),
-    ##   `00` = col_double(),
-    ##   `01` = col_double(),
-    ##   `02` = col_double(),
-    ##   `03` = col_double(),
-    ##   `04` = col_double(),
-    ##   `19` = col_double(),
-    ##   `20` = col_double(),
-    ##   `21` = col_double(),
-    ##   `22` = col_double()
-    ## )
-    ## See spec(...) for full column specifications.
-
-    ## Warning: 30 parsing failures.
-    ##  row col               expected actual                                                      file
-    ## 1159  20 no trailing characters      * 'D:/BigDataHW/HW6/NewTaipeiCity/105_Tanshui_20170217.csv'
-    ## 1159  21 no trailing characters      * 'D:/BigDataHW/HW6/NewTaipeiCity/105_Tanshui_20170217.csv'
-    ## 1216  00 no trailing characters      * 'D:/BigDataHW/HW6/NewTaipeiCity/105_Tanshui_20170217.csv'
-    ## 1573  21 no trailing characters      # 'D:/BigDataHW/HW6/NewTaipeiCity/105_Tanshui_20170217.csv'
-    ## 1585  19 no trailing characters      # 'D:/BigDataHW/HW6/NewTaipeiCity/105_Tanshui_20170217.csv'
-    ## .... ... ...................... ...... .........................................................
-    ## See problems(...) for more details.
-
-``` r
-Tucheng <- read_csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Tucheng_20170217.csv")
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `<U+00A4><e9><U+00B4><c1>` = col_date(format = "")
-    ## )
-    ## See spec(...) for full column specifications.
-
-``` r
-WanLi <- read_csv("D:/BigDataHW/HW6/NewTaipeiCity/105_WanLi_20170217.csv")
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `<U+00A4><e9><U+00B4><c1>` = col_date(format = "")
-    ## )
-    ## See spec(...) for full column specifications.
-
-``` r
-Xinzhuang <- read_csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Xinzhuang_20170217.csv")
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `<U+00A4><e9><U+00B4><c1>` = col_date(format = "")
-    ## )
-    ## See spec(...) for full column specifications.
-
-``` r
-Xizhi <- read_csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Xizhi_20170217.csv")
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `<U+00A4><e9><U+00B4><c1>` = col_date(format = "")
-    ## )
-    ## See spec(...) for full column specifications.
-
-``` r
-FactoryLocation <- read_csv("D:/BigDataHW/HW6/NewTaipeiFactoryLocation_0002336861720153000188.csv")
+Banqiao <- read.csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Banqiao_20170217.csv")
+Linkou <- read.csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Linkou_20170217.csv")
+Sanchong <- read.csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Sanchong_20170217.csv")
+Tanshui <- read.csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Tanshui_20170217.csv")
+Tucheng <- read.csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Tucheng_20170217.csv")
+WanLi <- read.csv("D:/BigDataHW/HW6/NewTaipeiCity/105_WanLi_20170217.csv")
+Xinzhuang <- read.csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Xinzhuang_20170217.csv")
+Xizhi <- read.csv("D:/BigDataHW/HW6/NewTaipeiCity/105_Xizhi_20170217.csv")
+NewTaipeiFactoryLocation <- read_csv("D:/BigDataHW/HW6/NewTaipeiFactoryLocation_0002336861720153000188.csv")
 ```
 
     ## Parsed with column specification:
@@ -167,12 +67,69 @@ FactoryLocation <- read_csv("D:/BigDataHW/HW6/NewTaipeiFactoryLocation_000233686
 資料處理與清洗
 --------------
 
-說明處理資料的步驟
-
-處理資料
+說明處理資料的步驟 我們要先清洗出各站2016/12/31的資料，再把他們結合成一張表方便比對，再來將所有的數據Factor轉成num，由於轉型態Factor轉成num的過程中，是用level轉，所以資料會跟原來大不相同，因此這裡先將factor轉成charactor再轉成num， 處理資料
 
 ``` r
 #這是R Code Chunk
+AirPollution.20160231 <- rbind(Banqiao[grepl("2016/12/31",Banqiao$日期),],    Linkou[grepl("2016/12/31",Linkou$日期),],                                                Sanchong[grepl("2016/12/31",Sanchong$日期),],  Tanshui[grepl("2016/12/31",Tanshui$日期),],                                              Tucheng[grepl("2016/12/31",Tucheng$日期),],    WanLi[grepl("2016/12/31",WanLi$日期),],
+                               Xinzhuang[grepl("2016/12/31",Xinzhuang$日期),],Xizhi[grepl("2016/12/31",Xizhi$日期),])
+for (i in 4:ncol(AirPollution.20160231)) {
+   if (!all(AirPollution.20160231[,i] %in% c("NR"," ","x","*","#"))) {
+     AirPollution.20160231[,i] <- as.numeric(as.character(AirPollution.20160231[,i]))
+   }
+}
+```
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+    ## Warning: 強制變更過程中產生了 NA
+
+``` r
+AirPollution.20160231$Average<- rowMeans(AirPollution.20160231[, 4:27],na.rm = TRUE)
 ```
 
 探索式資料分析
