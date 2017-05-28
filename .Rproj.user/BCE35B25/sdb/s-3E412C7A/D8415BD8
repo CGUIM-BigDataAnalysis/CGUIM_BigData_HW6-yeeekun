@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1495951370389.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D8415BD8",
+    "lastKnownWriteTime" : 3419473789575321445,
+    "last_content_update" : 1495951370389,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "4CA2B8F3",
+        "caption" : "Pollution",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Pollution&cache_key=4CA2B8F3",
+        "displayedObservations" : "7686",
+        "environment" : "",
+        "object" : "Pollution",
+        "preview" : "0",
+        "totalObservations" : "7686",
+        "variables" : "27"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

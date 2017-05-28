@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1495950586449.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A652F924",
+    "lastKnownWriteTime" : 3419473789575321445,
+    "last_content_update" : 1495950586449,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "9676CD51",
+        "caption" : "Linkou",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Linkou&cache_key=9676CD51",
+        "displayedObservations" : 5490,
+        "environment" : "",
+        "object" : "Linkou",
+        "preview" : 0,
+        "totalObservations" : 5490,
+        "variables" : 27
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

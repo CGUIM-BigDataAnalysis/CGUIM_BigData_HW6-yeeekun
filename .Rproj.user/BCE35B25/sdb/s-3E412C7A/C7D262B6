@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readr)\nLocation_factory <-\n  read_csv(\"C:/Users/Ray/Downloads/new/Factory.csv\")\n",
+    "created" : 1495951210847.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "760400825",
+    "id" : "C7D262B6",
+    "lastKnownWriteTime" : 1495904808,
+    "last_content_update" : 1495904808,
+    "path" : "D:/Program Files/BigData_R_Hw/Course/TRY.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
