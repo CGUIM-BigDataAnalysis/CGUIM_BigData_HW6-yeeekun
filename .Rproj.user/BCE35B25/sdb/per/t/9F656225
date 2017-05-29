@@ -12,15 +12,15 @@
     "path" : null,
     "project_path" : null,
     "properties" : {
-        "cacheKey" : "C858C94A",
+        "cacheKey" : "CF282CB2",
         "caption" : "factory_Xizhi",
-        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=factory_Xizhi&cache_key=C858C94A",
-        "displayedObservations" : 1476,
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=factory_Xizhi&cache_key=CF282CB2",
+        "displayedObservations" : "1476",
         "environment" : "",
         "object" : "factory_Xizhi",
-        "preview" : 0,
-        "totalObservations" : 1476,
-        "variables" : 9
+        "preview" : "0",
+        "totalObservations" : "1476",
+        "variables" : "9"
     },
     "relative_order" : 10,
     "source_on_save" : false,

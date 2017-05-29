@@ -12,15 +12,15 @@
     "path" : null,
     "project_path" : null,
     "properties" : {
-        "cacheKey" : "F643B2B8",
+        "cacheKey" : "CBBB3CCC",
         "caption" : "factory_operate",
-        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=factory_operate&cache_key=F643B2B8",
-        "displayedObservations" : 20272,
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=factory_operate&cache_key=CBBB3CCC",
+        "displayedObservations" : "20272",
         "environment" : "",
         "object" : "factory_operate",
-        "preview" : 0,
-        "totalObservations" : 20272,
-        "variables" : 9
+        "preview" : "0",
+        "totalObservations" : "20272",
+        "variables" : "10"
     },
     "relative_order" : 5,
     "source_on_save" : false,

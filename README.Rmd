@@ -18,10 +18,17 @@ output: github_document
 - 期末專題分析規劃與假設 (`10pt`)
 
 ## 分析議題背景
-背景介紹背景介紹
+PM 就是英文Particulate Matter（顆粒物）的縮寫。
+
+PM10代表空氣中空氣動力學粒徑小於等於10微米的所有顆粒物；
+PM2.5代表空氣中空氣動力學粒徑小於等於2.5微米的所有顆粒物；又稱細顆粒，細顆粒進入肺泡。 由此可見，PM10中包含粒徑小於2.5微米的顆粒物，即PM10包含PM2.5。世界衛生組織（WHO）指出： 對於發展中國家的城市：PM10中有近一半是PM2.5；
+對於已開發國家城市:PM10中PM2.5占50%至80%。由此，當空氣中PM2.5的濃度數據增加時，PM10的濃度數據就會升高。故目前歐盟國家仍然只監測PM10的濃度數據。
+
+PM10能被人直接吸入呼吸道，但部分可通過痰液等排出體外，也會被鼻腔內部的絨毛阻擋，對人體健康危害相對較小。不過PM10對於能見度和溫度的影響非常明顯。
+PM2.5通過呼吸可以到達肺部。這些顆粒物在肺泡上沉積下來，會干擾肺部的氣體交換，損傷肺泡和粘膜，引起肺組織的慢性纖維化，導致肺心病，加重哮喘病，引起慢性鼻咽炎、慢性支氣管炎等一系列病變，這些顆粒物還可以通過支氣管和肺泡進入血液，其中的有害氣體、重金屬等溶解在血液中，嚴重的可危及生命，對兒童和老年人的危害尤為明顯。
 
 ## 分析動機
-分析動機分析動機
+相信大家都對PM10及PM2.5這幾個名詞不陌生了，也知道它對人體健康會有危害，因此我們找出開放資料，就北部幾個區域於2016/12/31這一天的情況來比較看看到底是哪裡的空氣最髒，再來看看工廠在各區的分布多寡和空氣汙染的高低有沒有關聯。
 
 ## 使用資料
 說明使用資料們
@@ -44,7 +51,8 @@ NewTaipeiFactoryLocation <- read_csv("D:/BigDataHW/HW6/NewTaipeiFactoryLocation_
 
 ## 資料處理與清洗
 說明處理資料的步驟
-我們要先清洗出各站2016/12/31的資料，再把他們結合成一張表方便比對，再來將所有的數據Factor轉成num，由於轉型態Factor轉成num的過程中，是用level轉，所以資料會跟原來大不相同，因此這裡先將factor轉成charactor再轉成num，再取出平均，
+我們要先清洗出各站2016/12/31的資料，再把他們結合成一張表方便比對，再來將所有的數據charactor轉成num，由於資料表型態原本讀入是‘tbl_df’, ‘tbl’ and 'data.frame'，將字串轉成num時會有是資料是list所以物件無法強制轉成double的問題，因此在這裡先把資料表轉成data.frame再將資料型態轉換，再新增一個欄位求出當日的個數據平均。
+    而工廠清洗，我們先洗出還在生產中的工廠，再新增一個欄位Area填入區域，方便後便製圖以及比較，只用group_by和summarise求出每個區域有多少工廠，然後再以工廠數量來排序。
 處理資料
 ```{r}
 #這是R Code Chunk
@@ -58,18 +66,22 @@ AirPollution.20160231 <- rbind(
   Xinzhuang[grepl("2016/12/31",Xinzhuang$`日期`),],
   Xizhi[grepl("2016/12/31",Xizhi$`日期`),])
 
-AirPollution.20160231 <- as.data.frame(AirPollution.20160231)
+AirPollution.20160231 <- as.data.frame(AirPollution.20160231) 
 for (i in 4:ncol(AirPollution.20160231)) {
    if (!all(AirPollution.20160231[,i] %in% c("NR"," ","x","*","#"))) {
      AirPollution.20160231[,i] <- as.numeric(AirPollution.20160231[,i])
    }
 }
 AirPollution.20160231$Average<- round(rowMeans(AirPollution.20160231[, 4:27],na.rm = TRUE),2)
+AirPollution.20160231 <- AirPollution.20160231[order(AirPollution.20160231$`測項`, -AirPollution.20160231$Average),]
 
-##工廠清洗(抓八次)= =
-factory_operate <- rbind(NewTaipeiFactoryLocation[grepl("生產中",NewTaipeiFactoryLocation$STATUS),])
-factory_Xizhi <- rbind(factory_operate[grepl("汐止",factory_operate$FACT_ADDR),])
-factory_Xizhi$FACT_ADDR<-"汐止"
+##工廠清洗
+factory_operate <- NewTaipeiFactoryLocation[grepl("生產中",NewTaipeiFactoryLocation$STATUS),]
+factory_operate$Area <- substr(factory_operate$FACT_ADDR,4,6)
+#找出各區工廠數量，再以數量排序
+library(dplyr)
+factory_Area_Qunality <- group_by(factory_operate,Area)%>%summarise(nQuantity=n_distinct(FACT_NAME))
+factory_Area_Qunality <- arrange(factory_Area_Qunality,desc(nQuantity))
 
 ```
 

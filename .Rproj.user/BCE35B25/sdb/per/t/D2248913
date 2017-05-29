@@ -12,15 +12,15 @@
     "path" : null,
     "project_path" : null,
     "properties" : {
-        "cacheKey" : "9C1E2133",
+        "cacheKey" : "93060399",
         "caption" : "AirPollution.20160231",
-        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=AirPollution.20160231&cache_key=9C1E2133",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=AirPollution.20160231&cache_key=93060399",
         "displayedObservations" : "123",
         "environment" : "",
         "object" : "AirPollution.20160231",
         "preview" : "0",
         "totalObservations" : "123",
-        "variables" : "27"
+        "variables" : "28"
     },
     "relative_order" : 11,
     "source_on_save" : false,
