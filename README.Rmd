@@ -134,9 +134,9 @@ ggplot(data=Air_Tidy.s) +
          y="PM2.5") + theme_bw()
 
 #互動式圖表
-library(plotly)
-ggplotly()
-
+#library(plotly)
+#ggplotly()
+##要markdown不能用這個
 ```
 
 ## 期末專題分析規劃
