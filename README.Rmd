@@ -19,19 +19,48 @@ output: github_document
 
 ## 分析議題背景
 PM 就是英文Particulate Matter（顆粒物）的縮寫。
-
 PM10代表空氣中空氣動力學粒徑小於等於10微米的所有顆粒物；
 PM2.5代表空氣中空氣動力學粒徑小於等於2.5微米的所有顆粒物；又稱細顆粒，細顆粒進入肺泡。 由此可見，PM10中包含粒徑小於2.5微米的顆粒物，即PM10包含PM2.5。世界衛生組織（WHO）指出： 對於發展中國家的城市：PM10中有近一半是PM2.5；
 對於已開發國家城市:PM10中PM2.5占50%至80%。由此，當空氣中PM2.5的濃度數據增加時，PM10的濃度數據就會升高。故目前歐盟國家仍然只監測PM10的濃度數據。
-
 PM10能被人直接吸入呼吸道，但部分可通過痰液等排出體外，也會被鼻腔內部的絨毛阻擋，對人體健康危害相對較小。不過PM10對於能見度和溫度的影響非常明顯。
 PM2.5通過呼吸可以到達肺部。這些顆粒物在肺泡上沉積下來，會干擾肺部的氣體交換，損傷肺泡和粘膜，引起肺組織的慢性纖維化，導致肺心病，加重哮喘病，引起慢性鼻咽炎、慢性支氣管炎等一系列病變，這些顆粒物還可以通過支氣管和肺泡進入血液，其中的有害氣體、重金屬等溶解在血液中，嚴重的可危及生命，對兒童和老年人的危害尤為明顯。
+
+
 
 ## 分析動機
 相信大家都對PM10及PM2.5這幾個名詞不陌生了，也知道它對人體健康會有危害，因此我們找出開放資料，就北部幾個區域於2016/12/31這一天的情況來比較看看到底是哪裡的空氣最髒，再來看看工廠在各區的分布多寡和空氣汙染的高低有沒有關聯。
 
 ## 使用資料
-說明使用資料們
+關於讀入資料之欄位名稱及內容說明
+普通測站資料註記說明：
+`# 表示儀器檢核為無效值 
+* 表示程式檢核為無效值 
+x 表示人工檢核為無效值
+NR 表示無降雨
+空白 表示缺值
+
+測項簡稱    	單位	    測項名稱
+SO2 	        ppb	      二氧化硫
+CO	          ppm	      一氧化碳
+O3	          ppb	      臭氧
+PM10	        μg/m3	    懸浮微粒
+PM2.5	        μg/m3	    細懸浮微粒
+NOX	          ppb	      氮氧化物
+NO	          ppb       一氧化氮
+NO2	          ppb	      二氧化氮
+THC	          ppm	      總碳氫合物
+NMHC	        ppm	      非甲烷碳氫化合物
+CH4	          ppm	      甲烷
+UVB	          UVI	      紫外線指數
+AMB_TEMP	    ℃         大氣溫度
+RAINFALL	    mm    	  雨量
+RH	          %	        相對溼度
+WIND_SPEED	  m/sec	    風速(以每小時最後10分鐘算術平均)
+WIND_DIREC	  degress	  風向(以每小時最後10分鐘向量平均)
+WS_HR	        m/sec	    風速小時值(以整個小時算術平均)
+WD_HR	        degress	  風向小時值(以整個小時向量平均)
+PH_RAIN	      pH	      酸鹼值(酸雨)
+RAIN_COND	    μS/cm	    導電度(酸雨)
 
 載入使用資料們
 ```{r}
@@ -56,6 +85,7 @@ NewTaipeiFactoryLocation <- read_csv("D:/BigDataHW/HW6/NewTaipeiFactoryLocation_
 處理資料
 ```{r}
 #這是R Code Chunk
+AirAll<-rbind(Banqiao,Linkou,Sanchong,Tanshui,Tucheng,WanLi,Xinzhuang,Xizhi)
 AirPollution.20160231 <- rbind(
   Banqiao[grepl("2016/12/31",Banqiao$`日期`),],
   Linkou[grepl("2016/12/31",Linkou$`日期`),],
@@ -66,7 +96,7 @@ AirPollution.20160231 <- rbind(
   Xinzhuang[grepl("2016/12/31",Xinzhuang$`日期`),],
   Xizhi[grepl("2016/12/31",Xizhi$`日期`),])
 
-AirPollution.20160231 <- as.data.frame(AirPollution.20160231) 
+AirPollution.20160231 <- as.data.frame(AirPollution.20160231)
 for (i in 4:ncol(AirPollution.20160231)) {
    if (!all(AirPollution.20160231[,i] %in% c("NR"," ","x","*","#"))) {
      AirPollution.20160231[,i] <- as.numeric(AirPollution.20160231[,i])
@@ -74,22 +104,55 @@ for (i in 4:ncol(AirPollution.20160231)) {
 }
 AirPollution.20160231$Average<- round(rowMeans(AirPollution.20160231[, 4:27],na.rm = TRUE),2)
 AirPollution.20160231 <- AirPollution.20160231[order(AirPollution.20160231$`測項`, -AirPollution.20160231$Average),]
+Air_Tidy<-AirPollution.20160231[,-4:-27]
 
 ##工廠清洗
 factory_operate <- NewTaipeiFactoryLocation[grepl("生產中",NewTaipeiFactoryLocation$STATUS),]
 factory_operate$Area <- substr(factory_operate$FACT_ADDR,4,6)
 #找出各區工廠數量，再以數量排序
 library(dplyr)
-factory_Area_Qunality <- group_by(factory_operate,Area)%>%summarise(nQuantity=n_distinct(FACT_NAME))
+factory_Area_Qunality <- group_by(factory_operate,Area)%>%summarise(nQuantity=n_distinct(REGI_ID))
 factory_Area_Qunality <- arrange(factory_Area_Qunality,desc(nQuantity))
+#table(factory_operate$Area)
+
 
 ```
 
 ## 探索式資料分析
 圖文並茂圖文並茂
 ```{r}
-#這是R Code Chunk
+##作圖事前準備
+library(reshape2)
+library(tidyr)
+library(ggplot2)
+##長轉寬
+Air_Tidy.s <- spread(Air_Tidy, `測項`, Average)
+##寬轉長
+Air_Tidy.m <- melt(Air_Tidy, id.vars = c("日期","測站","測項"))
+
+#雙變量----PM10跟PM2.5的相關性，看起來不太相關
+cor(Air_Tidy.s$PM10,Air_Tidy.s$PM2.5)
+
+#散佈圖
+ggplot(data=Air_Tidy.s) +   
+    # 散布圖對應的函式是geom_point()
+    geom_point(aes(x=`測站`,  # 用aes()，描繪散布圖內的各種屬性
+                   y=PM2.5,
+                   main="Scatter Plot of PM2.5-測站",
+                   color=`測站`,
+                   size=10)
+               ) + 
+    # 用labs()，進行文字上的標註(Annotation)
+    labs(title="Scatter of PM2.5-Area",
+         x="測站",
+         y="PM2.5") + theme_bw()
+
+#互動式圖表
+library(plotly)
+ggplotly()
+
 ```
 
 ## 期末專題分析規劃
-期末專題要做XXOOO交叉分析
+上面最後一張圖可以比較出八個區域中林口的PM2.5值最高，不知道與附近華亞工業區有沒有相關，後續將在期末報告做進一步研究觀察。
+在期末報告中，我們將研究"各地區空氣品質汙染"及"各工廠種類"的關係，利用工廠資訊中的STATUS、PRF、FACT_NAME、REGI_ID等欄位，取出正在運作中的工廠及種類、數量，再將取出之結果與空氣品質汙染檢測出的數值加叉比對，找出是否不同種類的工廠、數量會影響空氣品質。
