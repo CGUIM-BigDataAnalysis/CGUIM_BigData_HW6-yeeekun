@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1497247741188.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "19F1AC6",
+    "lastKnownWriteTime" : 3419473789575321445,
+    "last_content_update" : 1497247741188,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "8C679574",
+        "caption" : "AirAll",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=AirAll&cache_key=8C679574",
+        "displayedObservations" : 45009,
+        "environment" : "",
+        "object" : "AirAll",
+        "preview" : 0,
+        "totalObservations" : 45009,
+        "variables" : 27
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

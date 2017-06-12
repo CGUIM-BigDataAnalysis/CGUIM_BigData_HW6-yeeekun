@@ -132,6 +132,9 @@ ggplot(data=Air_Tidy.s) +
     labs(title="Scatter of PM2.5-Area",
          x="測站",
          y="PM2.5") + theme_bw()
+#長條圖
+qplot(`測站`, data = Air_Tidy.s, geom = "bar", weight = PM2.5) +
+  ylab("PM2.5") + geom_bar(stat = 'count', fill = 'steelblue', colour = 'blue')
 
 #互動式圖表
 #library(plotly)
