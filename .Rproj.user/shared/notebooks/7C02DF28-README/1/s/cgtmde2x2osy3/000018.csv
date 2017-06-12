@@ -1,0 +1,24 @@
+"0","ggplot(data=Air_Tidy.s) +   
+    # 散布圖對應的函式是geom_point()
+    geom_point(aes(x=PM2.5,  # 用aes()，描繪散布圖內的各種屬性
+                   y=PM10,
+                   main=""Scatter Plot of PM10-PM2.5"",
+                   color=Station
+                   )
+               ) +
+  # 用geom_smooth()加上趨勢線
+  geom_smooth(aes(x=PM2.5,
+                  y=PM10)) +
+  # 用labs()，進行文字上的標註(Annotation)
+  labs(title=""Scatter of PM10-PM2.5"",
+         x=""PM2.5"",
+         y=""PM10"") + theme_bw()
+"
+"2","Ignoring unknown aesthetics: main"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"

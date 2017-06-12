@@ -22,7 +22,7 @@ PM2.5通過呼吸可以到達肺部。這些顆粒物在肺泡上沉積下來，
 `# 表示儀器檢核為無效值 
 * 表示程式檢核為無效值 
 x 表示人工檢核為無效值
-NR 表示無降雨
+NR 表示無降雨(已更改過)
 空白 表示缺值
 
 測項簡稱    	單位	    測項名稱
@@ -56,7 +56,6 @@ library(readxl)
 Banqiao <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年板橋站_20170217.xls")
 Linkou <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年林口站_20170217.xls")
 Sanchong <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年三重站_20170217.xls")
-Tanshui <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年淡水站_20170217.xls")
 Tucheng <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年土城站_20170217.xls")
 WanLi <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年萬里站_20170217.xls")
 Xinzhuang <- read_excel("D:/BigDataHW/HW6/NewTaipeiCity/105年新莊站_20170217.xls")
@@ -71,26 +70,104 @@ NewTaipeiFactoryLocation <- read_csv("D:/BigDataHW/HW6/NewTaipeiFactoryLocation_
 處理資料
 ```{r}
 #這是R Code Chunk
-AirAll<-rbind(Banqiao,Linkou,Sanchong,Tanshui,Tucheng,WanLi,Xinzhuang,Xizhi)
-AirPollution.20160231 <- rbind(
-  Banqiao[grepl("2016/12/31",Banqiao$`日期`),],
-  Linkou[grepl("2016/12/31",Linkou$`日期`),],
-  Sanchong[grepl("2016/12/31",Sanchong$`日期`),],
-  Tanshui[grepl("2016/12/31",Tanshui$`日期`),],
-  Tucheng[grepl("2016/12/31",Tucheng$`日期`),],
-  WanLi[grepl("2016/12/31",WanLi$`日期`),],
-  Xinzhuang[grepl("2016/12/31",Xinzhuang$`日期`),],
-  Xizhi[grepl("2016/12/31",Xizhi$`日期`),])
 
-AirPollution.20160231 <- as.data.frame(AirPollution.20160231)
-for (i in 4:ncol(AirPollution.20160231)) {
-   if (!all(AirPollution.20160231[,i] %in% c("NR"," ","x","*","#"))) {
-     AirPollution.20160231[,i] <- as.numeric(AirPollution.20160231[,i])
+#Banqiao
+names(Banqiao)[names(Banqiao)=="日期"]="Date";
+names(Banqiao)[names(Banqiao)=="測站"]="Station";
+names(Banqiao)[names(Banqiao)=="測項"]="Item";
+#Linkou
+names(Linkou)[names(Linkou)=="日期"]="Date";
+names(Linkou)[names(Linkou)=="測站"]="Station";
+names(Linkou)[names(Linkou)=="測項"]="Item";
+#Sanchong
+names(Sanchong)[names(Sanchong)=="日期"]="Date";
+names(Sanchong)[names(Sanchong)=="測站"]="Station";
+names(Sanchong)[names(Sanchong)=="測項"]="Item";
+#Tucheng
+names(Tucheng)[names(Tucheng)=="日期"]="Date";
+names(Tucheng)[names(Tucheng)=="測站"]="Station";
+names(Tucheng)[names(Tucheng)=="測項"]="Item";
+#WanLi
+names(WanLi)[names(WanLi)=="日期"]="Date";
+names(WanLi)[names(WanLi)=="測站"]="Station";
+names(WanLi)[names(WanLi)=="測項"]="Item";
+#Xinzhuang
+names(Xinzhuang)[names(Xinzhuang)=="日期"]="Date";
+names(Xinzhuang)[names(Xinzhuang)=="測站"]="Station";
+names(Xinzhuang)[names(Xinzhuang)=="測項"]="Item";
+#Xizhi
+names(Xizhi)[names(Xizhi)=="日期"]="Date";
+names(Xizhi)[names(Xizhi)=="測站"]="Station";
+names(Xizhi)[names(Xizhi)=="測項"]="Item";
+
+AirAll<-rbind(Banqiao,Linkou,Sanchong,Tucheng,WanLi,Xinzhuang,Xizhi)
+#10月
+AirPollution.201610 <- rbind(
+  Banqiao[grepl("2016/10",Banqiao$Date),],
+  Linkou[grepl("2016/10",Linkou$Date),],
+  Sanchong[grepl("2016/10",Sanchong$Date),],
+  Tucheng[grepl("2016/10",Tucheng$Date),],
+  WanLi[grepl("2016/10",WanLi$Date),],
+  Xinzhuang[grepl("2016/10",Xinzhuang$Date),],
+  Xizhi[grepl("2016/10",Xizhi$Date),])
+AirPollution.201610 <- as.data.frame(AirPollution.201610)
+for (i in 4:ncol(AirPollution.201610)) {
+   if (!all(AirPollution.201610[,i] %in% c(" ","x","*","#"))) {
+     AirPollution.201610[,i] <- as.numeric(AirPollution.201610[,i])
    }
 }
-AirPollution.20160231$Average<- round(rowMeans(AirPollution.20160231[, 4:27],na.rm = TRUE),2)
-AirPollution.20160231 <- AirPollution.20160231[order(AirPollution.20160231$`測項`, -AirPollution.20160231$Average),]
-Air_Tidy<-AirPollution.20160231[,-4:-27]
+AirPollution.201610$Average<- round(rowMeans(AirPollution.201610[, 4:27],na.rm = TRUE),2)
+AirPollution.201610 <- AirPollution.201610[order(AirPollution.201610$Item, -AirPollution.201610$Average),]
+#11月
+AirPollution.201611 <- rbind(
+  Banqiao[grepl("2016/11",Banqiao$Date),],
+  Linkou[grepl("2016/11",Linkou$Date),],
+  Sanchong[grepl("2016/11",Sanchong$Date),],
+  Tucheng[grepl("2016/11",Tucheng$Date),],
+  WanLi[grepl("2016/11",WanLi$Date),],
+  Xinzhuang[grepl("2016/11",Xinzhuang$Date),],
+  Xizhi[grepl("2016/11",Xizhi$Date),])
+AirPollution.201611 <- as.data.frame(AirPollution.201611)
+for (i in 4:ncol(AirPollution.201611)) {
+   if (!all(AirPollution.201611[,i] %in% c(" ","x","*","#"))) {
+     AirPollution.201611[,i] <- as.numeric(AirPollution.201611[,i])
+   }
+}
+AirPollution.201611$Average<- round(rowMeans(AirPollution.201611[, 4:27],na.rm = TRUE),2)
+AirPollution.201611 <- AirPollution.201611[order(AirPollution.201611$Item, -AirPollution.201611$Average),]
+#12月
+AirPollution.201612 <- rbind(
+  Banqiao[grepl("2016/12",Banqiao$Date),],
+  Linkou[grepl("2016/12",Linkou$Date),],
+  Sanchong[grepl("2016/12",Sanchong$Date),],
+  Tucheng[grepl("2016/12",Tucheng$Date),],
+  WanLi[grepl("2016/12",WanLi$Date),],
+  Xinzhuang[grepl("2016/12",Xinzhuang$Date),],
+  Xizhi[grepl("2016/12",Xizhi$Date),])
+AirPollution.201612 <- as.data.frame(AirPollution.201612)
+for (i in 4:ncol(AirPollution.201612)) {
+   if (!all(AirPollution.201612[,i] %in% c(" ","x","*","#"))) {
+     AirPollution.201612[,i] <- as.numeric(AirPollution.201612[,i])
+   }
+}
+AirPollution.201612$Average<- round(rowMeans(AirPollution.201612[, 4:27],na.rm = TRUE),2)
+AirPollution.201612 <- AirPollution.201612[order(AirPollution.201612$Item, -AirPollution.201612$Average),]
+##10+11+12月
+Air_Tidy<-rbind(
+  AirPollution.201610[,-4:-27] %>% group_by(Station,Item) %>%
+    summarise(
+      Month= 10,
+      Mean = mean(Average,na.rm = T)),
+  AirPollution.201611[,-4:-27] %>% group_by(Station,Item) %>%
+    summarise(
+      Month= 11,
+      Mean = mean(Average,na.rm = T)),
+  AirPollution.201612[,-4:-27] %>% group_by(Station,Item) %>%
+    summarise(
+      Month= 12,
+      Mean = mean(Average,na.rm = T))
+  )
+Air_Tidy
 
 ##工廠清洗
 factory_operate <- NewTaipeiFactoryLocation[grepl("生產中",NewTaipeiFactoryLocation$STATUS),]
@@ -111,30 +188,39 @@ factory_Area_Qunality <- arrange(factory_Area_Qunality,desc(nQuantity))
 library(reshape2)
 library(tidyr)
 library(ggplot2)
+
 ##長轉寬
-Air_Tidy.s <- spread(Air_Tidy, `測項`, Average)
+Air_Tidy.s <- spread(Air_Tidy, Item, Mean)
 ##寬轉長
-Air_Tidy.m <- melt(Air_Tidy, id.vars = c("日期","測站","測項"))
+Air_Tidy.m <- melt(Air_Tidy, id.vars = c("Station","Month","Item"))
 
 #雙變量----PM10跟PM2.5的相關性，看起來不太相關
 cor(Air_Tidy.s$PM10,Air_Tidy.s$PM2.5)
 
-#散佈圖
+
+#散佈圖(是否PM10越高則PM2.5越高，因為PM10包含2.5)
 ggplot(data=Air_Tidy.s) +   
     # 散布圖對應的函式是geom_point()
-    geom_point(aes(x=`測站`,  # 用aes()，描繪散布圖內的各種屬性
-                   y=PM2.5,
-                   main="Scatter Plot of PM2.5-測站",
-                   color=`測站`,
-                   size=10)
-               ) + 
-    # 用labs()，進行文字上的標註(Annotation)
-    labs(title="Scatter of PM2.5-Area",
-         x="測站",
-         y="PM2.5") + theme_bw()
-#長條圖
-qplot(`測站`, data = Air_Tidy.s, geom = "bar", weight = PM2.5) +
+    geom_point(aes(x=PM2.5,  # 用aes()，描繪散布圖內的各種屬性
+                   y=PM10,
+                   main="Scatter Plot of PM10-PM2.5",
+                   color=Station
+                   )
+               ) +
+  # 用geom_smooth()加上趨勢線
+  geom_smooth(aes(x=PM2.5,
+                  y=PM10)) +
+  # 用labs()，進行文字上的標註(Annotation)
+  labs(title="Scatter of PM10-PM2.5",
+         x="PM2.5",
+         y="PM10") + theme_bw()
+
+#長條圖//這裡要修改
+qplot(Station , data = Air_Tidy.s, geom = "bar", weight = PM2.5/3) +
   ylab("PM2.5") + geom_bar(stat = 'count', fill = 'steelblue', colour = 'blue')
+
+
+
 
 #互動式圖表
 #library(plotly)
@@ -143,5 +229,5 @@ qplot(`測站`, data = Air_Tidy.s, geom = "bar", weight = PM2.5) +
 ```
 
 ## 期末專題分析規劃
-上面最後一張圖可以比較出八個區域中林口的PM2.5值最高，不知道與附近華亞工業區有沒有相關，後續將在期末報告做進一步研究觀察。
+上面最後一張圖可以比較出七個區域中林口的PM2.5值最高，不知道與附近華亞工業區有沒有相關，後續將在期末報告做進一步研究觀察。
 在期末報告中，我們將研究"各地區空氣品質汙染"及"各工廠種類"的關係，利用工廠資訊中的STATUS、PRF、FACT_NAME、REGI_ID等欄位，取出正在運作中的工廠及種類、數量，再將取出之結果與空氣品質汙染檢測出的數值加叉比對，找出是否不同種類的工廠、數量會影響空氣品質。

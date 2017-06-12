@@ -12,17 +12,17 @@
     "path" : null,
     "project_path" : null,
     "properties" : {
-        "cacheKey" : "6AB1A3E1",
+        "cacheKey" : "A50EA6D6",
         "caption" : "Linkou",
-        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Linkou&cache_key=6AB1A3E1",
-        "displayedObservations" : 5490,
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Linkou&cache_key=A50EA6D6",
+        "displayedObservations" : "5490",
         "environment" : "",
         "object" : "Linkou",
-        "preview" : 0,
-        "totalObservations" : 5490,
-        "variables" : 27
+        "preview" : "0",
+        "totalObservations" : "5490",
+        "variables" : "27"
     },
-    "relative_order" : 17,
+    "relative_order" : 3,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_dataframe"

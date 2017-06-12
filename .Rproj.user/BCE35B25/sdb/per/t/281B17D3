@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1497276228376.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "281B17D3",
+    "lastKnownWriteTime" : 27303570963497028,
+    "last_content_update" : 1497276228376,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "1AD46DF2",
+        "caption" : "Air_Tidy",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Air_Tidy&cache_key=1AD46DF2",
+        "displayedObservations" : "114",
+        "environment" : "",
+        "object" : "Air_Tidy",
+        "preview" : "0",
+        "totalObservations" : "114",
+        "variables" : "4"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
