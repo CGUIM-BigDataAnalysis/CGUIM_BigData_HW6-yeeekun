@@ -12,17 +12,17 @@
     "path" : null,
     "project_path" : null,
     "properties" : {
-        "cacheKey" : "8B79F955",
+        "cacheKey" : "A6CAD204",
         "caption" : "Air_Tidy.m",
-        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Air_Tidy.m&cache_key=8B79F955",
-        "displayedObservations" : "114",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Air_Tidy.m&cache_key=A6CAD204",
+        "displayedObservations" : "684",
         "environment" : "",
         "object" : "Air_Tidy.m",
         "preview" : "0",
-        "totalObservations" : "114",
-        "variables" : "4"
+        "totalObservations" : "684",
+        "variables" : "5"
     },
-    "relative_order" : 7,
+    "relative_order" : 8,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_dataframe"

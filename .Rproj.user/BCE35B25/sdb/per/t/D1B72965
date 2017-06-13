@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n## Density Map 密度圖\n##install.packages(c(\"choroplethr\",\"choroplethrMaps\"))\nlibrary(choroplethr)\n\n#記載各州人口數的資料\ndata(df_pop_state)\n#把各州人口畫在地圖上\nstate_choropleth(df_pop_state) \n\n# 取得美國各州中心座標資料\nStateCenter<-data.frame( \n  region=tolower(state.name),\n  lon=state.center$x,\n  lat=state.center$y)\nhead(StateCenter,1)\n\n#美國各州人口資料\nStatePop<-merge(df_pop_state,\n                StateCenter,by=\"region\") \nhead(StatePop,1)\n\nPopPoint<-NULL \nfor(i in 1:nrow(StatePop)){\n  #每100萬人轉為1點\n  for(j in 1:(StatePop[i,\"value\"]/1000000)){\n    PopPoint<-rbind(PopPoint,StatePop[i,])   \n  }\n}\nhead(PopPoint,3)\n\nlibrary(ggmap)\n# Density 作圖\nUSMap <- get_map(location = \"United States\", zoom = 4)\ndensityMap<-ggmap(USMap, extent = \"device\") + \n  geom_density2d(data = PopPoint, aes(x = lon, y = lat), size = 0.3) + \n  stat_density2d(data = PopPoint, \n                 aes(x = lon, y = lat, \n                     fill = ..level.., alpha = ..level..), \n                 size = 0.01, bins = 16, geom = \"polygon\") + \n  scale_fill_gradient(low = \"green\", \n                      high = \"red\", guide = FALSE) + \n  scale_alpha(range = c(0, 0.3), guide = FALSE)\ndensityMap\n",
+    "created" : 1497344347548.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1827069493",
+    "id" : "D1B72965",
+    "lastKnownWriteTime" : 1495767270,
+    "last_content_update" : 1495767270,
+    "path" : "D:/Program Files/BigData_R_Hw/Course/C_0515_2.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

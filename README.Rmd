@@ -266,25 +266,41 @@ ggplot(data=Air_Tidy.s) +
                    main="Scatter Plot of PM10-PM2.5",
                    color=Month
                    )
-               ) +
+               )+
   # 用geom_smooth()加上趨勢線
   geom_smooth(aes(x=PM2.5,
-                  y=PM10)) +
+                  y=PM10),method='lm') +
   scale_color_continuous(low = "lightblue",high = "darkblue")+
   # 用labs()，進行文字上的標註(Annotation)
   labs(title="Scatter of PM10-PM2.5",
          x="PM2.5",
          y="PM10") + theme_bw()
 
+
+factory_Area<geocode(factory_Area_Qunality$Area)
+factory_Area_Qunality<-cbind(factory_Area_Qunality,factory_Area)
+
+##工廠分布
+library(ggmap)
+TaipeiMap <- get_map(
+    location = c(121.32,24.88,121.60,25.16), 
+    zoom = 12, maptype = 'terrain')
+ggmap(TaipeiMap)
+TaipeiMapO <- ggmap(TaipeiMap)+ 
+    geom_point(data=factory_Area_Qunality,
+               aes(x=lon, y=lat,
+                   color=nQuantity,size=1.5))+
+  scale_color_continuous(low = "yellow",high = "red")+
+  guides(size=FALSE)
+TaipeiMapO
+
 #長條圖//這裡要+
-qplot(Station , data = Air_Tidy.s, geom = "bar", weight = PM2.5/6) +
-  ylab("PM2.5") + geom_bar(stat = 'count', fill = 'steelblue', colour = 'blue')+ theme_bw()
-
-
+qplot(Month, data = Air_Tidy.s, geom = "bar", weight = PM2.5) + facet_grid(.~Station)+
+  ylab("PM2.5") + geom_bar(stat = 'count', fill = 'orange', colour = 'red')+ theme_bw()
 
 
 #互動式圖表
-#library(plotly)
+library(plotly)
 ggplotly()
 ##要markdown不能用這個
 ```

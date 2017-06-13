@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readr)\nLocation_factory <-\n  read_csv(\"C:/Users/Ray/Downloads/new/Factory.csv\")\n\n\nggplot()+geom_bar(data=Air_Tidy.s,\n                  aes(x=PM2.5,y=PM10),\n                  stat = \"identity\",\n                  color=\"yellow\") +  theme_bw()\n\n\n",
+    "created" : 1497348374481.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "37678461",
+    "id" : "B154BE22",
+    "lastKnownWriteTime" : 1497379225,
+    "last_content_update" : 1497379225172,
+    "path" : "D:/Program Files/BigData_R_Hw/Course/TRY.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
