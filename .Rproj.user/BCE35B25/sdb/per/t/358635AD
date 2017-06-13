@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n## 地名輸入測試\n##install.packages('ggmap')\nlibrary(ggmap)\ntwmap <- get_map(location = 'Taipei,Tuchen,Haishan', \n                 zoom = 15,\n                 ##language = \"zh-TW\"\n                 )\nggmap(twmap)\n\n## 經緯度輸入方法\nTaipeiMap <- get_map(location = c(121.43,24.93,121.62,25.19),\n                     zoom = 11,\n                     maptype = 'roadmap'\n                     )\nggmap(TaipeiMap)\n\n## 讀入並整理水資源資料\nlibrary(jsonlite)\nlibrary(RCurl)\nWaterData<-fromJSON(\n  getURL(\"http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=190796c8-7c56-42e0-8068-39242b8ec927\"))\nWaterDataFrame<-WaterData$result$results\n\n## 轉換經緯度、濁度的資料型態為數字方便使用\nWaterDataFrame$longitude<-as.numeric(WaterDataFrame$longitude)\nWaterDataFrame$latitude<-as.numeric(WaterDataFrame$latitude)\nWaterDataFrame$qua_cntu<-as.numeric(WaterDataFrame$qua_cntu)\n## 保留水質濁度>=0的資料 (去除負值)\nWaterDataClean<-WaterDataFrame[WaterDataFrame$qua_cntu>=0,]\nhead(WaterDataClean)\n\n## 疊上一層點分布圖\nTaipeiMapO <- ggmap(TaipeiMap)+\n  geom_point(data=WaterDataClean, \n             aes(x=longitude, y=latitude,\n                 color=qua_cntu,size=3.5))+ \n  scale_color_continuous(\n    low = \"yellow\",high = \"red\")+ \n  guides(size=FALSE)\nTaipeiMapO\n\n## 抓桃園的GOOGLE圖層\nTaoMap <- get_map(location = c(121.388539,25.034225,121.390539,25.036225),\n                  zoom = 11,\n                  language = \"zh-TW\"\n                  )\nTaoMap\nggmap(TaoMap)\n## 用點標出特定地點(ex.長庚大學)\nTaoselect <- ggmap(TaoMap)+\n  geom_point(aes(x=121.389539,\n                 y=25.035225,\n                 size=3\n                 ),color=\"blue\"\n             )+\n  guides(size=FALSE)\nTaoselect\n",
+    "created" : 1497335621295.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2756361180",
+    "id" : "358635AD",
+    "lastKnownWriteTime" : 1495767484,
+    "last_content_update" : 1495767484,
+    "path" : "D:/Program Files/BigData_R_Hw/Course/C_0515_1.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
