@@ -1,0 +1,91 @@
+"0","##工廠清洗"
+"0","factory_operate <- NewTaipeiFactoryLocation[grepl(""生產中"",NewTaipeiFactoryLocation$STATUS),]"
+"0","factory_operate$Area <- substr(factory_operate$FACT_ADDR,4,6)"
+"0","#找出各區工廠數量，再以數量排序"
+"0","factory_Area_Qunality <- group_by(factory_operate,Area)%>%summarise(nQuantity=n_distinct(REGI_ID))"
+"0","factory_Area_Qunality <- arrange(factory_Area_Qunality,desc(nQuantity))"
+"0","#table(factory_operate$Area)"
+"0","#工廠經緯度轉換 要跑很久別一直RUN"
+"0","factory_Area<-geocode(factory_Area_Qunality$Area)"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%96%B0%E8%8E%8A%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%A8%B9%E6%9E%97%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E4%B8%89%E9%87%8D%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E4%B8%AD%E5%92%8C%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%B1%90%E6%AD%A2%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E5%9C%9F%E5%9F%8E%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E4%BA%94%E8%82%A1%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%96%B0%E5%BA%97%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E9%B6%AF%E6%AD%8C%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%9D%BF%E6%A9%8B%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%B3%B0%E5%B1%B1%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%B7%A1%E6%B0%B4%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E8%98%86%E6%B4%B2%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E4%B8%89%E5%B3%BD%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E5%85%AB%E9%87%8C%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%9E%97%E5%8F%A3%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%B7%B1%E5%9D%91%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E7%91%9E%E8%8A%B3%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E4%B8%89%E8%8A%9D%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E6%B0%B8%E5%92%8C%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E9%87%91%E5%B1%B1%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E8%90%AC%E9%87%8C%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E7%9F%B3%E9%96%80%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E7%9F%B3%E7%A2%87%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E8%B2%A2%E5%AF%AE%E5%8D%80&sensor=false
+"
+"2","."
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E5%B9%B3%E6%BA%AA%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E5%9D%AA%E6%9E%97%E5%8D%80&sensor=false
+"
+"2","Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=%E9%9B%99%E6%BA%AA%E5%8D%80&sensor=false
+"
+"0","factory_Area_Qunality<-cbind(factory_Area_Qunality,factory_Area)"
+"0","##工廠數量&PM2.5之關係整理"
+"0","a <- Air_Tidy[grepl(""PM2.5"",Air_Tidy$Item),c(""Station"",""Item"",""Mean"")] %>% group_by(Station) %>%"
+"0","    summarise(Mean = mean(Mean,na.rm = T))"
+"0","b <- rbind(factory_Area_Qunality[grepl(""三重"",factory_Area_Qunality$Area),c(""Area"",""nQuantity"")],"
+"0","           factory_Area_Qunality[grepl(""土城"",factory_Area_Qunality$Area),c(""Area"",""nQuantity"")],"
+"0","           factory_Area_Qunality[grepl(""汐止"",factory_Area_Qunality$Area),c(""Area"",""nQuantity"")],"
+"0","           factory_Area_Qunality[grepl(""板橋"",factory_Area_Qunality$Area),c(""Area"",""nQuantity"")],"
+"0","           factory_Area_Qunality[grepl(""林口"",factory_Area_Qunality$Area),c(""Area"",""nQuantity"")],"
+"0","           factory_Area_Qunality[grepl(""新莊"",factory_Area_Qunality$Area),c(""Area"",""nQuantity"")],"
+"0","           factory_Area_Qunality[grepl(""萬里"",factory_Area_Qunality$Area),c(""Area"",""nQuantity"")])"
+"0","b$Area <-sub(""區"","""",b$Area)   "
+"0","names(b)[names(b)==""Area""]=""Station"""
+"0","Relationship <- merge(a, b, by = ""Station"")"

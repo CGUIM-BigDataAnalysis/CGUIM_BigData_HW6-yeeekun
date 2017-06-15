@@ -70,6 +70,9 @@ NewTaipeiFactoryLocation <- read_csv("D:/BigDataHW/HW6/NewTaipeiFactoryLocation_
 處理資料
 ```{r}
 #這是R Code Chunk
+library(dplyr)
+library(ggmap)
+
 #Banqiao
 names(Banqiao)[names(Banqiao)=="日期"]="Date";
 names(Banqiao)[names(Banqiao)=="測站"]="Station";
@@ -201,6 +204,7 @@ for (i in 4:ncol(AirPollution.201612)) {
 }
 AirPollution.201612$Average<- round(rowMeans(AirPollution.201612[, 4:27],na.rm = TRUE),2)
 AirPollution.201612 <- AirPollution.201612[order(AirPollution.201612$Item, -AirPollution.201612$Average),]
+
 ##7+8+9+10+11+12月
 Air_Tidy<-rbind(
   AirPollution.201607[,-4:-27] %>% group_by(Station,Item) %>%
@@ -228,17 +232,33 @@ Air_Tidy<-rbind(
       Month= 12,
       Mean = mean(Average,na.rm = T))
   )
-Air_Tidy
+#Air_Tidy
 
 ##工廠清洗
 factory_operate <- NewTaipeiFactoryLocation[grepl("生產中",NewTaipeiFactoryLocation$STATUS),]
 factory_operate$Area <- substr(factory_operate$FACT_ADDR,4,6)
 #找出各區工廠數量，再以數量排序
-library(dplyr)
 factory_Area_Qunality <- group_by(factory_operate,Area)%>%summarise(nQuantity=n_distinct(REGI_ID))
 factory_Area_Qunality <- arrange(factory_Area_Qunality,desc(nQuantity))
 #table(factory_operate$Area)
 
+#工廠經緯度轉換 要跑很久別一直RUN
+factory_Area<-geocode(factory_Area_Qunality$Area)
+factory_Area_Qunality<-cbind(factory_Area_Qunality,factory_Area)
+
+##工廠數量&PM2.5之關係整理
+a <- Air_Tidy[grepl("PM2.5",Air_Tidy$Item),c("Station","Item","Mean")] %>% group_by(Station) %>%
+    summarise(Mean = mean(Mean,na.rm = T))
+b <- rbind(factory_Area_Qunality[grepl("三重",factory_Area_Qunality$Area),c("Area","nQuantity")],
+           factory_Area_Qunality[grepl("土城",factory_Area_Qunality$Area),c("Area","nQuantity")],
+           factory_Area_Qunality[grepl("汐止",factory_Area_Qunality$Area),c("Area","nQuantity")],
+           factory_Area_Qunality[grepl("板橋",factory_Area_Qunality$Area),c("Area","nQuantity")],
+           factory_Area_Qunality[grepl("林口",factory_Area_Qunality$Area),c("Area","nQuantity")],
+           factory_Area_Qunality[grepl("新莊",factory_Area_Qunality$Area),c("Area","nQuantity")],
+           factory_Area_Qunality[grepl("萬里",factory_Area_Qunality$Area),c("Area","nQuantity")])
+b$Area <-sub("區","",b$Area)   
+names(b)[names(b)=="Area"]="Station"
+Relationship <- merge(a, b, by = "Station")
 
 ```
 
@@ -246,9 +266,15 @@ factory_Area_Qunality <- arrange(factory_Area_Qunality,desc(nQuantity))
 圖文並茂圖文並茂
 ```{r}
 ##作圖事前準備
+library(gplots)
+library(tidyverse)
+library(maps)
+library(maptools)
 library(reshape2)
 library(tidyr)
 library(ggplot2)
+library(showtext)
+showtext.auto(enable = TRUE)
 
 ##長轉寬
 Air_Tidy.s <- spread(Air_Tidy, Item, Mean)
@@ -263,7 +289,6 @@ ggplot(data=Air_Tidy.s) +
     # 散布圖對應的函式是geom_point()
     geom_point(aes(x=PM2.5,  # 用aes()，描繪散布圖內的各種屬性
                    y=PM10,
-                   main="Scatter Plot of PM10-PM2.5",
                    color=Month
                    )
                )+
@@ -274,35 +299,69 @@ ggplot(data=Air_Tidy.s) +
   # 用labs()，進行文字上的標註(Annotation)
   labs(title="Scatter of PM10-PM2.5",
          x="PM2.5",
-         y="PM10") + theme_bw()
+         y="PM10") + theme_bw()+
+  theme(text=element_text(family="wqy-microhei"))
 
-
-factory_Area<geocode(factory_Area_Qunality$Area)
-factory_Area_Qunality<-cbind(factory_Area_Qunality,factory_Area)
-
-##工廠分布
-library(ggmap)
+##工廠分布圖
 TaipeiMap <- get_map(
-    location = c(121.32,24.88,121.60,25.16), 
-    zoom = 12, maptype = 'terrain')
-ggmap(TaipeiMap)
+    location = c(121.34,24.93,121.64,25.24), 
+    zoom = 11,maptype = 'terrain',language = "zh-TW") ## 地勢圖 中文
+##ggmap(TaipeiMap)
 TaipeiMapO <- ggmap(TaipeiMap)+ 
     geom_point(data=factory_Area_Qunality,
                aes(x=lon, y=lat,
-                   color=nQuantity,size=1.5))+
+                   color=nQuantity)
+               )+
   scale_color_continuous(low = "yellow",high = "red")+
-  guides(size=FALSE)
+  guides(size=FALSE)+
+  labs(title="工廠地區分布與數量",
+         x="經度",
+         y="緯度",color="數量") + theme_bw()+
+  theme(text=element_text(family="wqy-microhei"))
 TaipeiMapO
 
 #長條圖//這裡要+
 qplot(Month, data = Air_Tidy.s, geom = "bar", weight = PM2.5) + facet_grid(.~Station)+
-  ylab("PM2.5") + geom_bar(stat = 'count', fill = 'orange', colour = 'red')+ theme_bw()
+  xlab("月份")+ylab("PM2.5")+
+  geom_bar(stat = 'count', fill = 'orange', colour = 'red')+ theme_bw()+
+  theme(text=element_text(family="wqy-microhei"))
 
+#製作空氣汙染與工廠數量關係圖表
+RelationshipValue <- cor(as.numeric(Relationship$Mean),as.numeric(Relationship$nQuantity))
+ggplot(data=Relationship) +   
+    # 散布圖對應的函式是geom_point()
+    geom_point(aes(x=Mean,  # 用aes()，描繪散布圖內的各種屬性
+                   y=nQuantity,
+                   color=Station,
+                   size=5
+                   )
+               )+guides(size=FALSE)+
+  # 用labs()，進行文字上的標註(Annotation)
+  labs(title="地區工廠數量與PM2.5之關係",
+         x="PM2.5",
+         y="工廠數量",color="地區") + theme_bw()+
+  theme(text=element_text(family="wqy-microhei"))
 
-#互動式圖表
-library(plotly)
-ggplotly()
-##要markdown不能用這個
+##把風向風速降雨、雨導電、紫外線、PH、CO、CH4值等較無用資料拿掉
+air_t.m<-Air_Tidy.m
+airduce<-rbind(Air_Tidy.m[grepl("WIND_DIREC",Air_Tidy.m$Item),],Air_Tidy.m[grepl("WD_HR",Air_Tidy.m$Item),],Air_Tidy.m[grepl("WIND_SPEED",Air_Tidy.m$Item),],Air_Tidy.m[grepl("WS_HR",Air_Tidy.m$Item),],Air_Tidy.m[grepl("PH_RAIN",Air_Tidy.m$Item),],Air_Tidy.m[grepl("RAINFALL",Air_Tidy.m$Item),],Air_Tidy.m[grepl("UVB",Air_Tidy.m$Item),],Air_Tidy.m[grepl("THC",Air_Tidy.m$Item),],Air_Tidy.m[grepl("NMHC",Air_Tidy.m$Item),],Air_Tidy.m[grepl("RAIN_COND",Air_Tidy.m$Item),],Air_Tidy.m[grepl("CO",Air_Tidy.m$Item),],Air_Tidy.m[grepl("CH4",Air_Tidy.m$Item),],Air_Tidy.m[grepl("SO2",Air_Tidy.m$Item),])
+##存入
+air_t.m<-anti_join(air_t.m,airduce)
+##作圖
+ggplot(air_t.m, aes(Station,Item)) + 
+    geom_tile(aes(fill = value),
+              colour = "white")+
+    scale_fill_gradient(low = "white", high = "steelblue", na.value ="grey50")+
+  labs(title="相對溼度與空氣中成份關係",
+         x="地區",
+         y="成份",color="數值") +
+  theme(text=element_text(family="wqy-microhei"))+
+theme_minimal()
+
+#互動式圖表 ##要markdown不能用這個
+#library(plotly)
+#ggplotly()
+
 ```
 
 ## 期末專題分析規劃

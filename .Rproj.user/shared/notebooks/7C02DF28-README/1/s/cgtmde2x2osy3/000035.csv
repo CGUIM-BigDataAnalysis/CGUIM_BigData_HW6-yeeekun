@@ -1,0 +1,16 @@
+"0","RelationshipFigure <-qplot(Mean, nQuantity, 
+      data = Relationship,
+      geom = ""point"")+
+      color='blue'
+"
+"2","Error in RelationshipFigure <- qplot(Mean, nQuantity, data = Relationship,  : 
+  could not find function ""<-<-""
+"
+"2","In addition: "
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"

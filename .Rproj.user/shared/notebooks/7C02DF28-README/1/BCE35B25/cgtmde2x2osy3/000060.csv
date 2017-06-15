@@ -1,0 +1,17 @@
+"0","##工廠分布"
+"0","TaipeiMap <- get_map("
+"0","    location = c(121.32,24.88,121.60,25.16), "
+"0","    zoom = 12, maptype = 'terrain')"
+"2","bounding box given to google - spatial extent only approximate."
+"2","converting bounding box to center/zoom specification. (experimental)
+"
+"2","Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=25.02,121.46&zoom=12&size=640x640&scale=2&maptype=terrain&language=en-EN&sensor=false
+"
+"0","##ggmap(TaipeiMap)"
+"0","TaipeiMapO <- ggmap(TaipeiMap)+ "
+"0","    geom_point(data=factory_Area_Qunality,"
+"0","               aes(x=lon, y=lat,"
+"0","                   color=nQuantity,size=1.5))+"
+"0","  scale_color_continuous(low = ""yellow"",high = ""red"")+"
+"0","  guides(size=FALSE)"
+"0","TaipeiMapO"

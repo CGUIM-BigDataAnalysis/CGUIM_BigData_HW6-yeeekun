@@ -1,0 +1,15 @@
+"0","factory_operate <- NewTaipeiFactoryLocation[grepl(""生產中"",NewTaipeiFactoryLocation$STATUS),]
+"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","factory_operate$Area <- substr(factory_operate$FACT_ADDR,4,6)"
+"0","#找出各區工廠數量，再以數量排序"
+"0","library(dplyr)"
+"0","factory_Area_Qunality <- group_by(factory_operate,Area)%>%summarise(nQuantity=n_distinct(REGI_ID))"
+"0","factory_Area_Qunality <- arrange(factory_Area_Qunality,desc(nQuantity))"
+"0","#table(factory_operate$Area)"

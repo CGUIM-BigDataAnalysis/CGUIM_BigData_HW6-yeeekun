@@ -1,0 +1,30 @@
+"0","#äº’å‹•å¼åœ–è¡¨ ##è¦markdownä¸èƒ½ç”¨é€™å€‹"
+"0","library(plotly)"
+"2","package ¡¥plotly¡¦ was built under R version 3.3.3"
+"2","
+Attaching package: ¡¥plotly¡¦
+
+"
+"2","The following object is masked from ¡¥package:ggmap¡¦:
+
+    wind
+
+"
+"2","The following object is masked from ¡¥package:ggplot2¡¦:
+
+    last_plot
+
+"
+"2","The following object is masked from ¡¥package:stats¡¦:
+
+    filter
+
+"
+"2","The following object is masked from ¡¥package:graphics¡¦:
+
+    layout
+
+"
+"0","ggplotly()"
+"2","We recommend that you use the dev version of ggplot2 with `ggplotly()`
+Install it with: `devtools::install_github('hadley/ggplot2')`"
